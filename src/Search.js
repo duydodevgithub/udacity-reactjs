@@ -1,12 +1,10 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import Book from "./Book"
 
 class Search extends React.Component {
-    state = {
-        book: ""
-    }
-    searchTerm = (event) => {
-        console.log(event.target.value)
+    searchBook = (query) => {
+        this.props.searchBook(query);
     }
     render() {
         return(
@@ -14,11 +12,18 @@ class Search extends React.Component {
               <div className="search-books-bar">
                 <Link className="close-search" to="/"></Link>
                 <div className="search-books-input-wrapper">
-                  <input type="text" placeholder="Search by title or author" onChange={this.searchTerm}/>
+                  <input type="text" placeholder="Search by title or author" onChange={(event) => {this.searchBook(event.target.value)}}/>
                 </div>
               </div>
               <div className="search-books-results">
-                <ol className="books-grid"></ol>
+                <ol className="books-grid">
+                    {this.props.books.map((book) => (
+                        <li key={book.id} className="contact-list-item">
+                            <Book book={book} updateShelf={this.props.updateShelf} />
+                        </li>
+                        // console.log(book)
+                    ))}
+                </ol>
               </div>
             </div>
         )
