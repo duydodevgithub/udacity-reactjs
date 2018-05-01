@@ -17,11 +17,11 @@ class Search extends React.Component {
               </div>
               <div className="search-books-results">
                 <ol className="books-grid">
-                    {this.props.books.map((book) => (
+                    {this.props.books.map((book) => ( !!book.imageLinks && (
                         <li key={book.id} className="contact-list-item">
                             <Book book={book} updateShelf={this.props.updateShelf} />
                         </li>
-                        // console.log(book)
+                    )
                     ))}
                 </ol>
               </div>
