@@ -21,8 +21,9 @@ class Search extends React.Component {
                         <li key={book.id} className="contact-list-item">
                             <Book book={book} updateShelf={this.props.updateShelf} />
                         </li>
-                    )
-                    ))}
+                        )
+                    ))
+                }
                 </ol>
               </div>
             </div>
