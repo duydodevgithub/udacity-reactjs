@@ -38,7 +38,17 @@ class BooksApp extends React.Component {
   searchBook = (query) => {
     // console.log(query);
     if(query) {
-      BooksAPI.search(query).then((books) => {this.setState({searchResult: books})})
+      console.log(query)
+      BooksAPI.search(query).then((books) => {
+        //check if AJAX works
+        if(books.length) {
+          this.setState({searchResult: books})
+        }
+      })
+    }
+    else {
+      this.setState({searchResult : []})
+      // console.log("No result")
     }
   }
 
