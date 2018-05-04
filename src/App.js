@@ -50,11 +50,11 @@ class BooksApp extends React.Component {
         //check if AJAX works
         if(books.length) {
           //check if books in response exist in books state
-          books.forEach((b, index) => {
+          books.forEach((b) => {
             let myBook = this.state.books.find((book) => (book.id === b.id));
             b.shelf = myBook ? myBook.shelf : "none";
           })
-          console.log(books);
+          // console.log(books);
           this.setState({searchResult: books})
         }
       })
