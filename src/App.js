@@ -31,8 +31,15 @@ class BooksApp extends React.Component {
   updateShelf = (book, shelf) => {
     BooksAPI.update(book, shelf).then(() => {
       book.shelf = shelf;
-      this.setState((currentState) => ({books: currentState.books.filter((b) => b.id !== book.id).concat(book)}))
+      this.setState((currentState) => ({
+        books: currentState.books.filter((b) => b.id !== book.id).concat(book),
+        searchResult: currentState.searchResult.filter((b) => b.id !== book.id)
+      }))
     })
+  }
+
+  clearSearch = () => {
+    this.setState({searchResult : [] })
   }
 
   searchBook = (query) => {
@@ -42,6 +49,12 @@ class BooksApp extends React.Component {
       BooksAPI.search(query).then((books) => {
         //check if AJAX works
         if(books.length) {
+          //check if books in response exist in books state
+          books.forEach((b, index) => {
+            let myBook = this.state.books.find((book) => (book.id === b.id));
+            b.shelf = myBook ? myBook.shelf : "none";
+          })
+          console.log(books);
           this.setState({searchResult: books})
         }
       })
@@ -55,7 +68,7 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route path="/search" render={()=>(<Search searchBook={this.searchBook} books={this.state.searchResult} updateShelf={this.updateShelf} />)}/>
+        <Route path="/search" render={()=>(<Search searchBook={this.searchBook} books={this.state.searchResult} updateShelf={this.updateShelf} clearSearch={this.clearSearch} />)}/>
 
         <Route exact path="/" render={() => (
             <div className="list-books">
